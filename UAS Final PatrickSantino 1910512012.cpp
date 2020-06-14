@@ -3,10 +3,11 @@
 //pet.santino@gmail.com
 //Dosen Pak Solihin
 //Tugas Pengganti UAS PSDA
-//Saya berjanji mengerjakan secara Jujur tanpa menyontek Orang lain dan seluruh source code tidak berasal dari pekerjaan orang lain
-//Apabila ada yang sama murni kebetulan mungkin karna cara penulisan
+//Saya berjanji mengerjakan secara Jujur tanpa menyontek Orang lain dan source code tidak berasal dari pekerjaan orang lain
+//Murni 100% saya sendiri yang mengerjakan 
 #include<iostream>
 #include<string>
+#define COUNT 10
 using namespace std;
 struct Node
 {
@@ -54,8 +55,11 @@ public:
 		Node*  current;
 		Node*  trailing;
 		Node* data = new Node(item);
-		if(root==NULL)
+		if(root==NULL){
 			root = data;
+			count++;			
+		}
+
 		else
 		{
 			current = root;
@@ -115,7 +119,7 @@ public:
 	void removeNode(Node* &p)
 	{
 		Node *current,*trailing,*temp;
-		if(p==NULL) cerr << "Can not remove from empty tree (1)"<<endl;
+		if(p==NULL) cerr << "NOT FOUND"<<endl;
 		else if(p->left == NULL && p->right==NULL){
 			temp = p;
 			p=NULL;
@@ -157,7 +161,7 @@ public:
 	{
 		Node* current,*trailCurrent;
 		bool found = false;
-		if(root == NULL) cout << "No cookie for you"<<endl;
+		if(root == NULL) cout << "NOT FOUND"<<endl;
 		else {
 			current=root;
 			while(current != NULL && !found){
@@ -172,7 +176,7 @@ public:
 				}
 			}
 			if(current==NULL)
-				cout << "Node to be deleted is not in tree"<<endl;
+				cout << "NOT FOUND"<<endl;
 			else if(found)
 			{
 				if(current==root)
@@ -181,7 +185,7 @@ public:
 					removeNode(trailCurrent->left);
 				else removeNode(trailCurrent->right);
 			}
-		}//else block ends
+		}
 	}
 	
 	void find(int item)
@@ -208,7 +212,7 @@ public:
 			else if(found)
 				cout << item;
 				cout << "\nNode "<<item<<" DITEMUKAN"<<endl;	
-		}//else block ends
+		}
 	}
 	
 	void deltree(Node** r)
@@ -224,7 +228,38 @@ public:
 	
 	void reset(){
 		deltree(&root);
+		count=0;
 	}
+	
+	void cetak2Dinti(Node *root, int space)  
+	{  
+
+	    if (root == NULL)  
+	        return;  
+	  
+ 
+	    space += COUNT;  
+	  
+
+	    cetak2Dinti(root->right, space);  
+	  
+
+ 
+	    cout<<endl;  
+	    for (int i = COUNT; i < space; i++)  
+	        cout<<" ";  
+	    cout<<"|"<<root->val<<"|"<<"\n";  
+	  
+ 
+	    cetak2Dinti(root->left, space);  
+	}  
+  
+
+	void cetak2D()  
+	{  
+ 
+	    cetak2Dinti(root, 0);  
+	}  
 
 };
 int main()
@@ -235,8 +270,8 @@ int main()
 	{
 		int choice;
 		int val;
-		cout << "1) For adding   a new Node"<<endl;
-		cout << "2) For removing a node"<<endl;
+		cout << "\n1) Menambahkan Node Baru"<<endl;
+		cout << "2) Menghapus Node (Spesifik)"<<endl;
 		cout << "3) Cetak Inorder "<<endl;
 		cout << "4) Cetak Preorder "<<endl;
 		cout << "5) Cetak Postorder "<<endl;
@@ -244,22 +279,35 @@ int main()
 		cout << "7) Cetak Bilangan Terbesar "<<endl;
 		cout << "8) Cetak Bilangan Terkecil "<<endl;
 		cout << "9) Reset BST "<<endl;
-		cout << "0) QUIT "<<endl;
+		cout << "88) Menghitung Banyaknya Node dalam Tree"<<endl;
+		cout << "99) Visualisasi Binary Tree"<<endl;
+		cout << "0) QUIT "<<endl<<endl;;
 		cin>>choice;
 		if(choice==1||choice==2||choice==6){
 			cout << "Masukkan Angka : ";cin>>val;
 		}
 		if (choice==1) bt.insert(val);
 		else if(choice==2) bt.remove(val);
-		else if(choice==3) bt.inOrder();
-		else if(choice==4) bt.preOrder();
-		else if(choice==5) bt.postOrder();
+		else if(choice==3){
+			cout<<"Inorder :\n";
+			bt.inOrder();
+		}
+		else if(choice==4){
+			cout<<"Preorder :\n";
+			bt.preOrder();
+		} 
+		else if(choice==5){
+			cout<<"Postorder :\n";
+			bt.postOrder();
+		} 
 		else if(choice==6) bt.find(val);
 		else if(choice==7){
 			cout << "Bilangan Terbesar pada Pohon adalah : "<< bt.getMax()<<endl;		
 		}else if(choice==8){
 			cout << "Bilangan Terkecil pada Pohon adalah : "<<bt.getMin()<<endl;
 		}else if(choice==9) bt.reset();
+		else if(choice==88) cout<<"Jumlah Node dalam Tree :"<<bt.getCount()<<endl;
+		else if(choice==99) bt.cetak2D();
 		else if(choice==0) break;
 	}
 	return 0;
