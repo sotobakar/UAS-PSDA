@@ -124,18 +124,21 @@ public:
 			temp = p;
 			p=NULL;
 			delete temp;
+			count--;
 			cout << "Case 1: Tidak memiliki anak"<<endl;
 		}
 		else if(p->left==NULL){
 			temp = p;
 			p = p->right;
 			delete temp;
+			count--;
 			cout << "Case 2a: Tidak ada Anak Kiri"<<endl;
 		}
 		else if(p->right==NULL){
 			temp = p;
 			p = p->left;
 			delete temp;
+			count--;
 			cout << "Case 2b: Tidak ada Anak Kanan"<<endl;
 		}
 
@@ -154,6 +157,7 @@ public:
 			else
 				trailing->right = current->left;
 			delete current;
+			count--;
 		}
 	
 	}
@@ -280,7 +284,7 @@ int main()
 		cout << "8) Cetak Bilangan Terkecil "<<endl;
 		cout << "9) Reset BST "<<endl;
 		cout << "88) Menghitung Banyaknya Node dalam Tree"<<endl;
-		cout << "99) Visualisasi Binary Tree"<<endl;
+		cout << "99) Visualisasi Binary Tree Left to Right"<<endl;
 		cout << "0) QUIT "<<endl<<endl;;
 		cin>>choice;
 		if(choice==1||choice==2||choice==6){
